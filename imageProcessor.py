@@ -23,14 +23,6 @@ class ImageProcessor():
         with Image.open(img_path) as img:
             img_array = np.array(img.resize((224,224)))
         img_in = tf.keras.applications.resnet50.preprocess_input(img_array)[np.newaxis, :]
-        image_features += [gap(resnet(img_in))]
-        data =  dict(
-            image_features    = np.array(image_features),
-            images            = np.array(vis_images),
-        )
+        image_features = gap(resnet(img_in))
 
-        with open(f'{self.data_folder}/image.p', 'wb') as pickle_file:
-            pickle.dump(data, pickle_file)
-        print(f'Data has been dumped into {self.data_folder}/image.p!')
-
-        return None
+        return np.array(image_features).reshape(-1, 2048)[0]

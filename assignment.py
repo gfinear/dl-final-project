@@ -104,7 +104,7 @@ def main(args):
         )
         photo_process = ImageProcessor('data')
         photo = photo_process.get_image_features(args.photo)
-        gen_caption_temperature(model, train_img_feats, word2idx, word2idx['<pad>'], args.temp, args.window_size)
+        print(gen_caption_temperature(model, photo, word2idx, word2idx['<pad>'], args.temp, args.window_size))
 
 
 
