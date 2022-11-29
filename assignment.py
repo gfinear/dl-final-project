@@ -22,7 +22,7 @@ def parse_args(args=None):
         parse_args('--task', 'both', ...)
     """
     parser = argparse.ArgumentParser(description="Let's train some neural nets!", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--task',           required=True,              choices=['train', 'test', 'both', 'own photo'],  help='Task to run')
+    parser.add_argument('--task',           required=True,              choices=['train', 'test', 'both', 'photo'],  help='Task to run')
     parser.add_argument('--data',           required=True,              help='File path to the assignment data file.')
     parser.add_argument('--photo',           required=True,              help='File path to the photo as JPG.')
     parser.add_argument('--epochs',         type=int,   default=3,      help='Number of epochs used in training.')
@@ -102,9 +102,9 @@ def main(args):
             ImageCaptionModel       = ImageCaptionModel
             ),
         )
-        photo_process = ImageProcessor('../data')
+        photo_process = ImageProcessor('data')
         photo = photo_process.get_image_features(args.photo)
-        gen_caption_temperature(train_captions, train_img_feats, word2idx, word2idx['<pad>'], args.temp, args.window_size)
+        gen_caption_temperature(model, train_img_feats, word2idx, word2idx['<pad>'], args.temp, args.window_size)
 
 
 
