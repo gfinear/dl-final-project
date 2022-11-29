@@ -113,7 +113,7 @@ def load_data(data_folder):
 
 
 def create_pickle(data_folder):
-    with open(f'{data_folder}/data.p', 'wb') as pickle_file:
+    with open(f'{data_folder}/summary_data.p', 'wb') as pickle_file:
         pickle.dump(load_data(data_folder), pickle_file)
     print(f'Data has been dumped into {data_folder}/summary_data.p!')
 
