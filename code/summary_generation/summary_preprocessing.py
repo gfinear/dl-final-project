@@ -126,5 +126,5 @@ if __name__ == '__main__':
 
     # THIS MAY REQUIRE RENAMING FILES
 
-    data_folder = 'data'
+    data_folder = '../../data'
     create_pickle(data_folder)
