@@ -65,7 +65,7 @@ def generate_skipthoughts(text_list, encoder, filepath):
 
     skipthoughts = {
         'skipthoughts': vectors,
-        'mean_vec': mean_vec
+        'style': mean_vec
     }
 
     with open(filepath, 'wb') as f:
@@ -79,8 +79,9 @@ def main():
     model = load_model()
     encoder = Encoder(model)
 
-    captions = process_captions("caption_data.p")
-    summaries = process_summaries("summary_data.p")
+    data_filepath = "../../data/"
+    captions = process_captions(data_filepath + "caption_data.p")
+    summaries = process_summaries(data_filepath + "summary_data.p")
 
     output_filepath = "skipthought_embeddings/"
     caption_pickle = output_filepath + "caption_skipthoughts.p"
