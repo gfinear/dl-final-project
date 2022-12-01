@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-try: from transformer import TransformerBlock, PositionalEncoding
+try: from caption_generation.transformer import TransformerBlock, PositionalEncoding
 except Exception as e: print(f"TransformerDecoder Might Not Work, as components failed to import:\n{e}")
 
 class TransformerDecoder(tf.keras.Model):

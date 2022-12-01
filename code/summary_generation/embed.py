@@ -4,7 +4,7 @@ Applies pre-trained skip-thought encoder to captions and summaries.
 import pickle
 import numpy as np
 
-from skipthought_ryankiros import load_model, Encoder
+from skipthought_ryankiros.skipthoughts import load_model, Encoder
 
 
 def process_captions(filepath):

@@ -7,12 +7,12 @@ from typing import Optional
 from types import SimpleNamespace
 
 
-from model import ImageCaptionModel, accuracy_function, loss_function
-from decoder import TransformerDecoder
-from image_processor import ImageProcessor
-import transformer
+from caption_generation.model import ImageCaptionModel, accuracy_function, loss_function
+from caption_generation.decoder import TransformerDecoder
+from caption_generation.image_processor import ImageProcessor
+from caption_generation import transformer
 
-class captionModel():
+class CaptionModel():
     def __init__(self):
         self.data_file = '../../data/caption_data.p'
         self.model_location = 'transform_model'
@@ -64,5 +64,5 @@ class captionModel():
 
 if __name__ == '__main__':
     
-    caption = captionModel()
+    caption = CaptionModel()
     caption.caption('Unknown.jpeg')
