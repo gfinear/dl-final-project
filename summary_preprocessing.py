@@ -18,7 +18,7 @@ def preprocess_summaries(summaries, window_size):
       
         # Split the summary into separate words, and collect all words which are more than 
         # one character and which contain only alphabets (ie. discard words with mixed alpha-numerics)
-        clean_words = [word for word in summary_nopunct.split() if ((len(word) > 1) and (word.isalpha()))]
+        clean_words = [word for word in summary_nopunct.split() if not ((len(word) == 1) and (word != "a"))]
       
         # Join those words into a string
         summary_new = ['<start>'] + clean_words[:window_size-1] + ['<end>']
@@ -66,8 +66,8 @@ def process_summaries(train_summaries, test_summaries):
                 if word_count[word] <= minimum_frequency:
                     summary[index] = '<unk>'
 
-    unk_summaries(train_summaries, 50)
-    unk_summaries(test_summaries, 50)
+    unk_summaries(train_summaries, 20)
+    unk_summaries(test_summaries, 20)
 
     # pad summaries so they all have equal length
     def pad_summaries(summaries, window_size):
@@ -81,6 +81,7 @@ def process_summaries(train_summaries, test_summaries):
     word2idx = {}
     vocab_size = 0
     for summary in train_summaries:
+        print(summary)
         for index, word in enumerate(summary):
             if word in word2idx:
                 summary[index] = word2idx[word]
