@@ -90,7 +90,7 @@ def main(args):
             test_model(model, test_captions, test_img_feats, word2idx['<pad>'], args)
     
     if args.task in ('own photo'):
-        model = model = tf.keras.models.load_model(
+        model = tf.keras.models.load_model(
         args.chkpt_path,
         custom_objects=dict(
             AttentionHead           = transformer.AttentionHead,
