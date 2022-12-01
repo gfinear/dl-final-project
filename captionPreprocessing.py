@@ -104,8 +104,8 @@ def load_data(data_folder):
                 if word_count[word] <= minimum_frequency:
                     caption[index] = '<unk>'
 
-    unk_captions(train_captions, 50)
-    unk_captions(test_captions, 50)
+    unk_captions(train_captions, 20)
+    unk_captions(test_captions, 20)
 
     # pad captions so they all have equal length
     def pad_captions(captions, window_size):
