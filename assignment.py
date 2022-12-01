@@ -24,7 +24,7 @@ def parse_args(args=None):
     parser = argparse.ArgumentParser(description="Let's train some neural nets!", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--task',           required=True,              choices=['train', 'test', 'both', 'photo'],  help='Task to run')
     parser.add_argument('--data',           required=True,              help='File path to the assignment data file.')
-    parser.add_argument('--photo',           required=True,              help='File path to the photo as JPG.')
+    parser.add_argument('--photo',           required=False,              help='File path to the photo as JPG.')
     parser.add_argument('--epochs',         type=int,   default=3,      help='Number of epochs used in training.')
     parser.add_argument('--lr',             type=float, default=1e-3,   help='Model\'s learning rate')
     parser.add_argument('--optimizer',      type=str,   default='adam', choices=['adam', 'rmsprop', 'sgd'], help='Model\'s optimizer')
