@@ -9,7 +9,7 @@ from types import SimpleNamespace
 
 from model import ImageCaptionModel, accuracy_function, loss_function
 from decoder import TransformerDecoder
-from imageProcessor import ImageProcessor
+from image_processor import ImageProcessor
 import transformer
 
 
@@ -102,7 +102,7 @@ def main(args):
             ImageCaptionModel       = ImageCaptionModel
             ),
         )
-        photo_process = ImageProcessor('data')
+        photo_process = ImageProcessor('../../data')
         photo = photo_process.get_image_features(args.photo)
         print(gen_caption_temperature(model, photo, word2idx, word2idx['<pad>'], args.temp, args.window_size))
 

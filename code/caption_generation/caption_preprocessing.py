@@ -49,9 +49,9 @@ def get_image_features(image_names, data_folder, vis_subset=100):
 
 def load_data(data_folder):
     '''
-    Method that was used to preprocess the data in the data.p file. You do not need 
+    Method that was used to preprocess the data in the caption_data.p file. You do not need 
     to use this method, nor is this used anywhere in the assignment. This is the method
-    that the TAs used to pre-process the Flickr 8k dataset and create the data.p file 
+    that the TAs used to pre-process the Flickr 8k dataset and create the caption_data.p file 
     that is in your assignment folder. 
 
     Feel free to ignore this, but please read over this if you want a little more clairity 
@@ -149,13 +149,13 @@ def load_data(data_folder):
 
 
 def create_pickle(data_folder):
-    with open(f'{data_folder}/data.p', 'wb') as pickle_file:
+    with open(f'{data_folder}/caption_data.p', 'wb') as pickle_file:
         pickle.dump(load_data(data_folder), pickle_file)
-    print(f'Data has been dumped into {data_folder}/data.p!')
+    print(f'Data has been dumped into {data_folder}/caption_data.p!')
 
 
 if __name__ == '__main__':
     ## Download this and put the Images and captions.txt into your ../data directory
     ## Flickr 8k Dataset: https://www.kaggle.com/datasets/adityajn105/flickr8k?resource=download
-    data_folder = '../data'
+    data_folder = '../../data'
     create_pickle(data_folder)

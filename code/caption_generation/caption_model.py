@@ -9,12 +9,12 @@ from types import SimpleNamespace
 
 from model import ImageCaptionModel, accuracy_function, loss_function
 from decoder import TransformerDecoder
-from imageProcessor import ImageProcessor
+from image_processor import ImageProcessor
 import transformer
 
 class captionModel():
     def __init__(self):
-        self.data_file = 'data/data.p'
+        self.data_file = '../../data/caption_data.p'
         self.model_location = 'transform_model'
     
     def caption(self, photo):
@@ -41,7 +41,7 @@ class captionModel():
             ImageCaptionModel       = ImageCaptionModel
             ),
         )
-        photo_process = ImageProcessor('data')
+        photo_process = ImageProcessor('../../data')
         photo = photo_process.get_image_features(photo)
         print(self.gen_caption_temperature(model, photo, word2idx, word2idx['<pad>'], .5, 20))
 
@@ -61,3 +61,8 @@ class captionModel():
                 attempts += 1
             caption_so_far.append(next_token)
         return ' '.join([idsToWords[x] for x in caption_so_far][1:-1])
+
+if __name__ == '__main__':
+    
+    caption = captionModel()
+    caption.caption('Unknown.jpeg')
