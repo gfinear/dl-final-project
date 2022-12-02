@@ -135,7 +135,7 @@ def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False,
             elif k == 251:
                 print('Encoding summaries...')
             else:
-                print('Oh no! Did you change caption/summary window size?')
+                print(f'Encoding text of length {k}')
         numbatches = len(ds[k]) // batch_size + 1
         for minibatch in range(numbatches):
             caps = ds[k][minibatch::numbatches]
