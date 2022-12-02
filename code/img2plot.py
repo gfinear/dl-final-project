@@ -1,5 +1,5 @@
-from caption_generation.caption_model import CaptionModel
-from summary_generation.summary_model import SummaryModel
+from caption_generation import CaptionModel
+from summary_generation import SummaryModel
 
 class Img2Plot():
 

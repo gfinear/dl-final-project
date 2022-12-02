@@ -7,17 +7,17 @@ from typing import Optional
 from types import SimpleNamespace
 
 
-from caption_generation.model import ImageCaptionModel, accuracy_function, loss_function
-from caption_generation.decoder import TransformerDecoder
-from caption_generation.image_processor import ImageProcessor
-from caption_generation import transformer
+from .model import ImageCaptionModel, accuracy_function, loss_function
+from .decoder import TransformerDecoder
+from .image_processor import ImageProcessor
+from . import transformer
 
 class CaptionModel():
     def __init__(self):
         self.data_file = '../../data/caption_data.p'
         self.model_location = 'transform_model'
     
-    def caption(self, photo):
+    def __call__(self, photo):
         with open(self.data_file, 'rb') as data_file:
             data_dict = pickle.load(data_file)
 
@@ -43,7 +43,7 @@ class CaptionModel():
         )
         photo_process = ImageProcessor('../../data')
         photo = photo_process.get_image_features(photo)
-        print(self.gen_caption_temperature(model, photo, word2idx, word2idx['<pad>'], .5, 20))
+        return self.gen_caption_temperature(model, photo, word2idx, word2idx['<pad>'], .5, 20)
 
     def gen_caption_temperature(self, model, image_embedding, wordToIds, padID, temp, window_length):
         idsToWords = {id: word for word, id in wordToIds.items()}

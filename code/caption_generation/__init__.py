@@ -1,0 +1,1 @@
+from caption_generation.caption_model import CaptionModel

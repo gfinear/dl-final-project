@@ -22,8 +22,9 @@ profile = False
 #-----------------------------------------------------------------------------#
 # Specify model and table locations here
 #-----------------------------------------------------------------------------#
-path_to_models = 'skipthought_ryankiros/skipthought_models/'
-path_to_tables = 'skipthought_ryankiros/skipthought_models/'
+cur = os.path.dirname(__file__)
+path_to_models = os.path.join(cur, 'skipthought_models/', '')
+path_to_tables = os.path.join(cur, 'skipthought_models/', '')
 #-----------------------------------------------------------------------------#
 
 path_to_umodel = path_to_models + 'uni_skip.npz'
