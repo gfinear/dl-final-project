@@ -2,6 +2,7 @@ import argparse
 
 from img2plot import Img2Plot
 
+
 def main(args):
     img2plot = Img2Plot()
     plot = img2plot(args.image_filepath)
@@ -12,8 +13,9 @@ def main(args):
 
     with open(args.print, 'w') as output:
         output.write(plot)
-
+        
     return
+
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser()

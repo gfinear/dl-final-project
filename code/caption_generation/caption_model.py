@@ -14,8 +14,9 @@ from . import transformer
 
 class CaptionModel():
     def __init__(self):
-        self.data_file = '../../data/caption_data.p'
-        self.model_location = 'transform_model'
+        self.cur_path = os.path.dirname(__file__)
+        self.data_file = os.path.join(self.cur_path, '../../data/caption_data.p')
+        self.model_location = os.path.join(self.cur_path, 'transform_model')
     
     def __call__(self, photo):
         with open(self.data_file, 'rb') as data_file:
@@ -41,7 +42,7 @@ class CaptionModel():
             ImageCaptionModel       = ImageCaptionModel
             ),
         )
-        photo_process = ImageProcessor('../../data')
+        photo_process = ImageProcessor(os.path.join(self.cur_path, '../../data'))
         photo = photo_process.get_image_features(photo)
         return self.gen_caption_temperature(model, photo, word2idx, word2idx['<pad>'], .5, 20)
 
@@ -65,4 +66,4 @@ class CaptionModel():
 if __name__ == '__main__':
     
     caption = CaptionModel()
-    caption.caption('Unknown.jpeg')
+    caption.caption('test.jpeg')

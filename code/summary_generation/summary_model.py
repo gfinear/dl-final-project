@@ -1,17 +1,19 @@
 import pickle
 
 from .decoder import Decoder
-from .skipthought_ryankiros.skipthoughts import load_model, Encoder
+from .encoder import Encoder
 
 class SummaryModel():
 
     def __init__(self):
-        self.encoder = Encoder(load_model())
+        self.encoder = Encoder()
         self.decoder = Decoder()
 
         self.caption_style, self.summary_style = self.load_styles()
 
     def __call__(self, caption):
+        if isinstance(caption, str):
+            caption = [caption]
         caption_skipthought = self.encoder(caption)
         summary_skipthought = self.transfer_style(caption_skipthought)
         summary = self.decoder(summary_skipthought)
