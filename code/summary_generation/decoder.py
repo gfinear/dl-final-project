@@ -4,7 +4,7 @@ Decodes skip-thought vector into summaries.
 import tensorflow as tf
 
 class Decoder(tf.keras.Model):
-    def __init__(self, vocab_size, hidden_size, **kwargs):
+    def __init__(self, vocab_size, hidden_size=128, **kwargs):
         super().__init__(**kwargs)
         self.summary_vocab_size = vocab_size
         self.hidden_size = hidden_size
