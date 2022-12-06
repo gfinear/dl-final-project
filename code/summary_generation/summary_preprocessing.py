@@ -31,7 +31,7 @@ def load_movies(data_folder):
     movie_summary_path = f'{data_folder}/moviesummaries/mpst_full_data.csv'
     movie_data = pd.read_csv(movie_summary_path, skipinitialspace=True)
     
-    train_summaries = movie_data[movie_data['split'] == "train"]["plot_synopsis"].tolist()
+    train_summaries = movie_data[movie_data['split'] != "test"]["plot_synopsis"].tolist()
 
     test_summaries = movie_data[movie_data['split'] == "test"]["plot_synopsis"].tolist()
 
@@ -81,7 +81,6 @@ def process_summaries(train_summaries, test_summaries):
     word2idx = {}
     vocab_size = 0
     for summary in train_summaries:
-        print(summary)
         for index, word in enumerate(summary):
             if word in word2idx:
                 summary[index] = word2idx[word]
