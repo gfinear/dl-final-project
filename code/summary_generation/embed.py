@@ -17,16 +17,21 @@ def process_captions(filepath):
     with open(filepath, 'rb') as f:
         data = pickle.load(f)
 
-    captions_idx = data['train_captions']
+    train_captions_idx = data['train_captions']
+    test_captions_idx = data['test_captions']
     idx2word = data['idx2word']
 
     # preprocess captions
-    caption_list = []
+    train_captions = []
+    test_captions = []
     
-    for caption in captions_idx:
-        caption_list.append(" ".join([idx2word[i] for i in caption]))
+    for caption in train_captions_idx:
+        train_captions.append(" ".join([idx2word[i] for i in caption]))
 
-    return caption_list
+    for caption in test_captions_idx:
+        test_captions.append(" ".join([idx2word[i] for i in caption]))
+
+    return train_captions, test_captions
 
 
 def process_summaries(filepath):
@@ -39,16 +44,21 @@ def process_summaries(filepath):
     with open(filepath, 'rb') as f:
         data = pickle.load(f)
 
-    summaries_idx = data['train_summaries']
+    train_summaries_idx = data['train_summaries']
+    test_summaries_idx = data['test_summaries']
     idx2word = data['idx2word']
 
     # preprocess summaries
-    summary_list = []
+    train_summaries = []
+    test_summaries = []
 
-    for summary in summaries_idx:
-        summary_list.append(" ".join([idx2word[i] for i in summary]))
+    for summary in train_summaries_idx:
+        train_summaries.append(" ".join([idx2word[i] for i in summary]))
 
-    return summary_list
+    for summary in test_summaries_idx:
+        test_summaries.append(" ".join([idx2word[i] for i in summary]))
+
+    return train_summaries, test_summaries
 
 
 def generate_skipthoughts(text_list, encoder, filepath):
@@ -60,12 +70,19 @@ def generate_skipthoughts(text_list, encoder, filepath):
     - Encoder
     - Output filepath
     '''
-    vectors = encoder.encode(text_list)
-    mean_vec = np.mean(vectors, axis=0)
+    train_list, test_list = text_list
+
+    train_vectors = encoder.encode(train_list)
+    test_vectors = encoder.encode(test_list)
+
+    train_mean = np.mean(train_vectors, axis=0)
+    test_mean = np.mean(test_vectors, axis=0)
 
     skipthoughts = {
-        'skipthoughts': vectors,
-        'style': mean_vec
+        'train_skipthoughts': train_vectors,
+        'test_skipthoughts': test_vectors,
+        'train_style': train_mean,
+        'test_style': test_mean
     }
 
     with open(filepath, 'wb') as f:
