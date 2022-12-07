@@ -9,12 +9,9 @@ def main(args):
 
     if args.print is None:
         print(plot)
-        return
-
-    with open(args.print, 'w') as output:
-        output.write(plot)
-        
-    return
+    else:
+        with open(args.print, 'w') as output:
+            output.write(plot)
 
 
 def parse_args(args=None):
