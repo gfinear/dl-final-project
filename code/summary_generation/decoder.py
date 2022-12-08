@@ -25,9 +25,6 @@ class Decoder(tf.keras.Model):
             self.perplexity_tracker = tf.keras.metrics.Mean(name='perplexity')
 
     def call(self, inputs):
-        if self.vocab_size is None:
-            return self.decoder(inputs)
-
         summaries, st_vectors = inputs
         st_embeddings = self.skipthought_embedding(st_vectors)
         summary_embeddings = self.embedding(summaries)
@@ -60,4 +57,20 @@ class Decoder(tf.keras.Model):
         scce = tf.keras.losses.SparseCategoricalCrossentropy()
         return tf.exp(scce(truth, predicted))
 
-    # TODO: Add temperature function
+    def generate_summary(self, summary_skipthough, wordToIds, temp, window_length):
+        idsToWords = {id: word for word, id in wordToIds.items()}
+        unk_token = wordToIds['<unk>']
+        padId = wordsToIds['<pad>']
+        summary_so_far = [wordToIds['<start>']]
+        while len(summary_so_far) < window_length and summary_so_far[-1] != wordToIds['<end>']:
+            summary_input = np.array([summary_so_far + ((window_length - len(summary_so_far)) * [padID])])
+            logits = self(np.expand_dims(summary_skipthough, 0), summary_input)
+            logits = logits[0][len(summary_so_far) - 1]
+            probs = tf.nn.softmax(logits / temp).numpy()
+            next_token = unk_token
+            attempts = 0
+            while next_token == unk_token and attempts < 5:
+                next_token = np.random.choice(len(probs), p=probs)
+                attempts += 1
+            summary_so_far.append(next_token)
+        return ' '.join([idsToWords[x] for x in summary_so_far][1:-1])
