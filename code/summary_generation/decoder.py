@@ -21,8 +21,6 @@ class Decoder(tf.keras.Model):
             self.embedding = tf.keras.layers.Embedding(vocab_size, hidden_size)
 
             self.gru = [
-                tf.keras.layers.GRU(hidden_size, return_sequences=True),
-                tf.keras.layers.GRU(hidden_size, return_sequences=True),
                 tf.keras.layers.GRU(hidden_size, return_sequences=True)
             ]
 

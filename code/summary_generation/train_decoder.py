@@ -37,8 +37,8 @@ def main():
 
     decoder.fit(
         (train[:, :-1], train_context), train[:, 1:],
-        epochs=2,
-        batch_size=128,
+        epochs=100,
+        batch_size=64,
         validation_data=((test[:, :-1], test_context), test[:, 1:])
     )
 
