@@ -66,8 +66,8 @@ def process_summaries(train_summaries, test_summaries):
                 if word_count[word] <= minimum_frequency:
                     summary[index] = '<unk>'
 
-    unk_summaries(train_summaries, 20)
-    unk_summaries(test_summaries, 20)
+    unk_summaries(train_summaries, 500)
+    unk_summaries(test_summaries, 500)
 
     # pad summaries so they all have equal length
     def pad_summaries(summaries, window_size):
