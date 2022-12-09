@@ -6,7 +6,7 @@ import tensorflow as tf
 
 
 class Decoder(tf.keras.Model):
-    def __init__(self, vocab_size=None, hidden_size=1028, **kwargs):
+    def __init__(self, vocab_size=None, hidden_size=64, **kwargs):
         super().__init__(**kwargs)
         self.vocab_size = vocab_size
         self.hidden_size = hidden_size
@@ -19,8 +19,17 @@ class Decoder(tf.keras.Model):
         else:
             self.skipthought_embedding = tf.keras.layers.Dense(hidden_size)
             self.embedding = tf.keras.layers.Embedding(vocab_size, hidden_size)
-            self.gru = tf.keras.layers.GRU(hidden_size, return_sequences=True)
-            self.classifier = tf.keras.layers.Dense(vocab_size)
+
+            self.gru = [
+                tf.keras.layers.GRU(hidden_size, return_sequences=True),
+                tf.keras.layers.GRU(hidden_size, return_sequences=True),
+                tf.keras.layers.GRU(hidden_size, return_sequences=True)
+            ]
+
+            self.classifier = tf.keras.Sequential([
+                tf.keras.layers.Dense(hidden_size, activation='leaky_relu'),
+                tf.keras.layers.Dense(vocab_size)
+            ])
 
             self.perplexity_tracker = tf.keras.metrics.Mean(name='perplexity')
 
@@ -31,8 +40,12 @@ class Decoder(tf.keras.Model):
         summaries, st_vectors = inputs
         st_embeddings = self.skipthought_embedding(st_vectors)
         summary_embeddings = self.embedding(summaries)
-        outputs = self.gru(summary_embeddings, initial_state=st_embeddings)
-        logits = self.classifier(outputs)
+
+        res = summary_embeddings
+        for layer in self.gru:
+            res = layer(res, initial_state=st_embeddings)
+
+        logits = self.classifier(res)
         return logits
 
     def train_step(self, data):
