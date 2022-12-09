@@ -1,4 +1,3 @@
-import os
 import pickle
 import tensorflow as tf
 
@@ -20,10 +19,10 @@ def main():
     summary_data, skipthought_data = load_data()
     vocab_size = len(summary_data['idx2word'])
 
-    decoder = Decoder(vocab_size)
+    decoder = Decoder(vocab_size=vocab_size)
 
     decoder.compile(
-        optimizer=tf.keras.optimizers.Adam(1e-3),
+        optimizer=tf.keras.optimizers.Adam(1e-4),
         loss=tf.keras.losses.SparseCategoricalCrossentropy()
     )
 
