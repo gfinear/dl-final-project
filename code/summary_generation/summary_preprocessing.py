@@ -51,7 +51,7 @@ def load_books(data_folder):
 
 def process_summaries(train_summaries, test_summaries):
     #remove special charachters and other nessesary preprocessing
-    window_size = 250
+    window_size = 150
     preprocess_summaries(train_summaries, window_size)
     preprocess_summaries(test_summaries, window_size)
 
@@ -94,6 +94,8 @@ def process_summaries(train_summaries, test_summaries):
                 summary[index] = word2idx[word] 
             else:
                 summary[index] = word2idx['<unk>']
+
+    print(f'Vocabulary size: {vocab_size}')
 
     return dict(
         train_summaries         = np.array(train_summaries),
