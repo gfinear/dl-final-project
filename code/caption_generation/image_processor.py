@@ -12,9 +12,6 @@ class ImageProcessor():
         self.data_folder = data_folder
         
     def get_image_features(self, image_name):
-        '''
-    Method used to extract the features from the images in the dataset using ResNet50
-    '''
         image_features = []
         vis_images = []
         resnet = tf.keras.applications.ResNet50(False)  ## Produces Bx7x7x2048

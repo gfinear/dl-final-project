@@ -7,7 +7,7 @@ from .encoder import Encoder
 
 class SummaryModel():
 
-    def __init__(self, temperature=0.5, length=151, k=50):
+    def __init__(self, temperature=0.1, length=151, k=100):
         self.temperature = temperature
         self.length = length
         self.k = k
@@ -31,7 +31,7 @@ class SummaryModel():
         return summary
 
     def transfer_style(self, embedding):
-        return embedding #- self.caption_style + self.summary_style
+        return embedding - self.caption_style + self.summary_style
 
     def generate_summary(self, skipthought):
         idsToWords = {id: word for word, id in self.wordToId.items()}
@@ -46,12 +46,11 @@ class SummaryModel():
             probs = tf.nn.softmax(logits / self.temperature).numpy()
             next_token = unk_token
             attempts = 0
-            while next_token in {unk_token, endId, padId} and attempts < 3:
-                # next_token = np.random.choice(len(probs), p=probs)
+            while next_token in {unk_token, endId, padId} and attempts < 1:
                 top = np.argpartition(probs, -self.k)[-self.k:]
                 k_prob = probs[top] / np.sum(probs[top])
                 next_token = np.random.choice(top, p=k_prob)
-                if next_token != endId or len(summary) >= 100:
+                if (next_token != endId and next_token != padId) or len(summary) >= 100:
                     attempts += 1
             summary.append(next_token)
         return ' '.join([idsToWords[x] for x in summary][1:-1])

@@ -1,0 +1,1 @@
+This folder is sourced from the CS1470 Image Captioning project and uses that code as a component of this project.
