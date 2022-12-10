@@ -154,9 +154,6 @@ def load_model(args):
             ImageCaptionModel       = ImageCaptionModel
         ),
     )
-    ## Saving is very nuanced. Might need to set the custom components correctly.
-    ## Functools.partial is a function wrapper that auto-fills a selection of arguments. 
-    ## so in other words, the first argument of ImageCaptionModel.test is model (for self)
     from functools import partial
     model.test    = partial(ImageCaptionModel.test,    model)
     model.train   = partial(ImageCaptionModel.train,   model)
